@@ -15,6 +15,8 @@ The code base for simulating learning in the mouse brain visual cortex using ana
 ## Important Papers (make new folder to keep track of literature)
 * [Higher-Order Areas of the Mouse Visual Cortex](https://www.annualreviews.org/doi/10.1146/annurev-vision-102016-061331)
 * [Approximating the Architecture of Visual Cortex in a Convolutional Network](https://www.mitpressjournals.org/doi/full/10.1162/neco_a_01211)
+*
 
 ## Useful links (starters)
 * [ConvLSTM model in PyTorch implementation](https://github.com/ndrplz/ConvLSTM_pytorch)
+* [Convolutional GRU in PyTorch implementation](http://jkimmel.net/pytorch_conv_gru/)
