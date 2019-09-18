@@ -8,7 +8,7 @@
 
 * [Higher-order areas of the mouse visual cortex](https://www.annualreviews.org/doi/10.1146/annurev-vision-102016-061331)
  
-# Papers on the deep learning models
+# Papers on deep learning models
 
 * [Representation learning with contrastive predictive coding](https://arxiv.org/pdf/1807.03748.pdf)
 
