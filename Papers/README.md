@@ -11,5 +11,5 @@
 # Papers on deep learning models
 
 * [Representation learning with contrastive predictive coding](https://arxiv.org/pdf/1807.03748.pdf)
-
 * [Neural predictive belief representations](https://arxiv.org/pdf/1807.03748.pdf)
+* [A large-scale, standardized physiological survey reveals higher order coding throughout the mouse visual cortex](https://www.biorxiv.org/content/10.1101/359513v1.abstract)
