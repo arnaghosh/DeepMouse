@@ -1,1 +1,2 @@
-# This folder contains the codes for reading and processing the CatCam dataset
+# CatCam dataset prep
+This folder contains the codes and notes for reading and processing the CatCam dataset
