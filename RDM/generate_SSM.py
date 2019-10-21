@@ -2,26 +2,6 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
-class StimuliDataset(torch.utils.data.Dataset):
-	def __init__(self,dataset,transform=None):
-		'''
-		dataset: numpy array of images/stimuli
-		transform: transform to be applied to image
-		'''
-		self.images = dataset
-		self.len_dataset = len(self.images)
-		self.transform = transform
-
-	def __len__(self):
-		return self.len_dataset
-
-	def __getitem__(self,index):
-		img = self.images[index]
-		if self.transform:
-			img = self.transform(img)
-		return img
-
-
 def generate_features(model, dataset, transform=None, layers=None):
 	'''
 	model: DNN to generate features from - should have a method named "get_activations" that returns a list of layer activations
@@ -126,3 +106,7 @@ def compute_ssm(similarity1, similarity2, num_shuffles=None, num_folds=None):
 		from scipy.stats import spearmanr
 		r,_ = spearmanr(similarity1.flatten(),similarity2.flatten())
 		return r
+	except:
+		print("Error in calculating spearman correlation")
+		raise
+
