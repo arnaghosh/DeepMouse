@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 from tqdm import tqdm
+from Stimuli import StimuliDataset
 
 def generate_features(model, dataset, transform=None, layers=None):
 	'''
@@ -110,3 +111,17 @@ def compute_ssm(similarity1, similarity2, num_shuffles=None, num_folds=None):
 		print("Error in calculating spearman correlation")
 		raise
 
+def __main__():
+	# A placeholder function to illustrate usage of the functions
+	N_stim = 100
+	A = np.random.rand(N_stim,300)	# random array containing activations of 300 units
+	B = np.random.rand(N_stim,500)	# random array containing activations of 500 units
+	A_corrupt = 2*A + 0.01*np.random.rand(*A.shape)	# some corrupt version of 2*A
+	activation_dict = {'L1':A,'L1_corrupted':A_corrupt,'L2':B}
+	similarity_dict = compute_similarity_matrices(activation_dict)
+	ssm_12 = compute_ssm(similarity_dict['L1'],similarity_dict['L2'])
+	ssm_12_corrupt = compute_ssm(similarity_dict['L1_corrupt'],similarity_dict['L2'])
+	ssm_11_corrupt = compute_ssm(similarity_dict['L1'],similarity_dict['L1_corrupt'])
+	print("SSM values for 2 layer representations :",ssm_12)
+	print("SSM values for 2 layer representations with noise :",ssm_12_corrupt)
+	print("SSM values for a layer representations (with and without noise):",ssm_11_corrupt)
