@@ -117,7 +117,7 @@ if __name__=="__main__":
 	A = np.random.rand(N_stim,300)	# random array containing activations of 300 units
 	B = np.random.rand(N_stim,500)	# random array containing activations of 500 units
 	A_corrupt = 2*A + 0.01*np.random.rand(*A.shape)	# some corrupt version of 2*A
-	activation_dict = {'L1':A,'L1_corrupted':A_corrupt,'L2':B}
+	activation_dict = {'L1':A,'L1_corrupt':A_corrupt,'L2':B}
 	similarity_dict = compute_similarity_matrices(activation_dict)
 	ssm_12 = compute_ssm(similarity_dict['L1'],similarity_dict['L2'])
 	ssm_12_corrupt = compute_ssm(similarity_dict['L1_corrupt'],similarity_dict['L2'])
