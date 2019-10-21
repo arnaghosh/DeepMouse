@@ -111,7 +111,7 @@ def compute_ssm(similarity1, similarity2, num_shuffles=None, num_folds=None):
 		print("Error in calculating spearman correlation")
 		raise
 
-def __main__():
+if __name__=="__main__":
 	# A placeholder function to illustrate usage of the functions
 	N_stim = 100
 	A = np.random.rand(N_stim,300)	# random array containing activations of 300 units
