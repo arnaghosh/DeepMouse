@@ -78,3 +78,15 @@ def compute_SVCCA(activation1, activation2):
 
 	return np.mean(corr_values)
 
+if __name__=="__main__":
+	# A placeholder function to illustrate usage of the functions
+	N_stim = 100
+	A = np.random.rand(N_stim,300)	# random array containing activations of 300 units
+	B = np.random.rand(N_stim,500)	# random array containing activations of 500 units
+	A_corrupt = 2*A + 0.01*np.random.rand(*A.shape)	# some corrupt version of 2*A
+	SVCCA_12 = compute_SVCCA(A,B)
+	SVCCA_12_corrupt = compute_SVCCA(A_corrupt,B)
+	SVCCA_11_corrupt = compute_SVCCA(A,A_corrupt)
+	print("SVCCA values for 2 layer representations :",SVCCA_12)
+	print("SVCCA values for 2 layer representations with noise :",SVCCA_12_corrupt)
+	print("SVCCA values for a layer representations (with and without noise):",SVCCA_11_corrupt)
