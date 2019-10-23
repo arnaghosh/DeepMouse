@@ -74,7 +74,7 @@ def compute_SVCCA(activation1, activation2):
 	red_activation1_c, red_activation2_c = cca.fit_transform(red_activation1,red_activation2)
 	corr_values = np.zeros(pca_r)
 	for idx in range(pca_r):
-		corr_values[idx] = np.corrcoef(red_activation1_c[:,idx],red_activation2_c[:,idx])
+		corr_values[idx] = np.corrcoef(red_activation1_c[:,idx],red_activation2_c[:,idx])[0,1]	# get the off-diagonal element
 
 	return np.mean(corr_values)
 
