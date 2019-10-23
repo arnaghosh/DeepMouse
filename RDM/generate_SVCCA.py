@@ -59,10 +59,10 @@ def compute_SVCCA(activation1, activation2):
 	pca_r = 40	# value from Shi et al NeurIPS 2019
 	n = activation1.shape[0]
 	assert n==activation2.shape[0], "Size of activation arrays are different!!"
-	if pca_r < activation1.shape[1]:
+	if pca_r > activation1.shape[1]:
 		print("Activation 1 array has less neurons.. changing number of PCs to ",activation1.shape[1])
 		pca_r = activation1.shape[1]
-	if pca_r < activation2.shape[1]:
+	if pca_r > activation2.shape[1]:
 		print("Activation 2 array has less neurons.. changing number of PCs to ",activation2.shape[1])
 		pca_r = activation2.shape[1]
 
