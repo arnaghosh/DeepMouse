@@ -24,26 +24,51 @@ def generate_features(model, dataset, transform=None, layers=None):
 	num_activations = len(rand_activations)
 
 	feat_dict = {}
-	if layers:
-		for l in layers:
-			feat_dict[l] = []
+	if isinstance(rand_activations,list):	# if get_activations returns a list
+		if layers:
+			for l in layers:
+				feat_dict[l] = []
 
-		with torch.no_grad():
-			for iter,x in enumerate(loader):
-				activations = model.get_activations(x)
-				for l in layers:
-					feat_dict[l].append(activations[l])
-	
+			with torch.no_grad():
+				for iter,x in enumerate(loader):
+					activations = model.get_activations(x)
+					for l in layers:
+						feat_dict[l].append(activations[l])
+		
+		else:
+			for l in range(num_activations):
+				feat_dict[l] = []
+
+			with torch.no_grad():
+				for iter,x in enumerate(loader):
+					activations = model.get_activations(x)
+					for l in range(num_activations):
+						feat_dict[l].append(activations[l])
+
+	elif isinstance(rand_activations,dict):		# if get_activations returns a dict
+		if layers:
+			for l in layers:
+				feat_dict[l] = []
+
+			with torch.no_grad():
+				for iter,x in enumerate(loader):
+					activations = model.get_activations(x)
+					for l in layers:
+						assert l in activations.keys(), "Layer "+str(l) + " is not present in model!!"
+						feat_dict[l].append(activations[l])
+		
+		else:
+			for l in rand_activations.keys():
+				feat_dict[l] = []
+
+			with torch.no_grad():
+				for iter,x in enumerate(loader):
+					activations = model.get_activations(x)
+					for l in rand_activations.keys():
+						feat_dict[l].append(activations[l])
+
 	else:
-		for l in range(num_activations):
-			feat_dict[l] = []
-
-		with torch.no_grad():
-			for iter,x in enumerate(loader):
-				activations = model.get_activations(x)
-				for l in range(num_activations):
-					feat_dict[l].append(activations[l])
-
+		raise NotImplementedError
 	for k in feat_dict.keys():
 		feat_dict[k] = np.array(feat_dict[k])
 		print("Shape of activation array of layer ",k,": ",feat_dict[k].shape)
