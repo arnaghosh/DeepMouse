@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 from tqdm import tqdm
-from Stimuli import StimuliDataset
+from .Stimuli import StimuliDataset
 import sys, os
 
 curr_wd = os.getcwd()
