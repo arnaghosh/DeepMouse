@@ -51,17 +51,18 @@ def get_activations(PATH,dataset):
         		print(name)
         		# partial to assign the layer name to each hook
         		m.register_forward_hook(partial(save_activation, activations, name))
+    with torch.no_grad():
+        for batch in dataset:
+            out = model(batch)
 
-    for batch in dataset:
-        out = model(batch)
-
-    activations = {name: torch.cat(outputs, 0) for name, outputs in activations.items()}
-
+        activations = {name: torch.cat(outputs, 0).detach() for name, outputs in activations.items()}
+    for key,value in activations.items():
+        activations[key] = value.detach().numpy()
     return activations
 
 
 def save_activation(activations, name, mod, inp, out):#save_activation(name, mod, inp, out,activations):
-    activations[name].append(out.cpu())	
+    activations[name].append(out.cpu().detach())	
     
 
 if __name__=="__main__":
@@ -72,7 +73,5 @@ if __name__=="__main__":
 	# dummy dataset: 10 batches of size 5
 	dataset = [torch.rand(5,8,3,5,56,56) for _ in range(10)] # B x N x C x T x W x H
 	
-	activations = get_activations(PATH,dataset)
-
-
+	activations = get_activations(PATH,dataset);
 
