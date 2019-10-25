@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from tqdm import tqdm
 from Stimuli import StimuliDataset
-import sys
+import sys, os
 
 curr_wd = os.getcwd()
 file_dir = os.path.dirname(os.path.abspath(__file__))
