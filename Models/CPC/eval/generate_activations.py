@@ -14,6 +14,7 @@ os.chdir(file_dir)
 print(os.getcwd())
 sys.path.append('../backbone/')
 sys.path.append('../dpc/')
+print(sys.path)
 os.chdir(curr_wd)
 from resnet_2d3d import neq_load_customized
 from model_3d import *
