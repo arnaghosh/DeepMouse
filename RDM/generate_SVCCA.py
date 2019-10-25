@@ -2,7 +2,14 @@ import numpy as np
 import torch
 from tqdm import tqdm
 from Stimuli import StimuliDataset
+import sys
+
+curr_wd = os.getcwd()
+file_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(file_dir)
 sys.path.append('../Models/CPC/eval/')
+os.chdir(curr_wd)
+
 from generate_activations import *
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import CCA

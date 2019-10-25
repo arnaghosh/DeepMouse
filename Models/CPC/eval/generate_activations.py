@@ -8,8 +8,12 @@ import torchvision.models as tmodels
 from functools import partial
 import collections
 
+curr_wd = os.getcwd()
+file_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(file_dir)
 sys.path.append('../backbone/')
 sys.path.append('../dpc/')
+os.chdir(curr_wd)
 from resnet_2d3d import neq_load_customized
 from model_3d import *
 
