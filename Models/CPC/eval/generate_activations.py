@@ -11,6 +11,7 @@ import collections
 curr_wd = os.getcwd()
 file_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(file_dir)
+print(os.getcwd())
 sys.path.append('../backbone/')
 sys.path.append('../dpc/')
 os.chdir(curr_wd)
