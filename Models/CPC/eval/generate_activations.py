@@ -26,7 +26,7 @@ TO DO:
 
 '''
 
-def get_activations(PATH,batch):
+def get_activations(PATH,dataset):
 	
     '''
     
@@ -50,7 +50,7 @@ def get_activations(PATH,batch):
     		if type(m)==nn.Conv3d:
         		print(name)
         		# partial to assign the layer name to each hook
-        		m.register_forward_hook(partial(save_activation, name))
+        		m.register_forward_hook(partial(save_activation, activations, name))
 
     for batch in dataset:
         out = model(batch)
@@ -60,9 +60,9 @@ def get_activations(PATH,batch):
     return activations
 
 
-def save_activation(name, mod, inp, out):
-	activations[name].append(out.cpu())	
-
+def save_activation(activations, name, mod, inp, out):#save_activation(name, mod, inp, out,activations):
+    activations[name].append(out.cpu())	
+    
 
 if __name__=="__main__":
 	
@@ -70,9 +70,9 @@ if __name__=="__main__":
 	PATH = "../pretrained/testmodel.pth.tar"
 	
 	# dummy dataset: 10 batches of size 5
-	batch = [torch.rand(5,8,3,5,56,56) for _ in range(10)] # B x N x C x T x W x H
+	dataset = [torch.rand(5,8,3,5,56,56) for _ in range(10)] # B x N x C x T x W x H
 	
-	activations = get_activations(PATH,batch)
+	activations = get_activations(PATH,dataset)
 
 
 
