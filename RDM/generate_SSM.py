@@ -2,10 +2,13 @@ import numpy as np
 import torch
 from tqdm import tqdm
 from Stimuli import StimuliDataset
+import sys
+sys.path.append('../Models/CPC/eval/')
+from generate_activations import *
 
-def generate_features(model, dataset, transform=None, layers=None):
+def generate_features(model_path, dataset, transform=None, layers=None):
 	'''
-	model: DNN to generate features from - should have a method named "get_activations" that returns a list of layer activations
+	model_path: path to saved DNN to generate features from - will be used by get_activations function
 	dataset: numpy array of images/stimuli of size (number of datapoints X channels/cont. frames X height X width)
 	transform: torch transform to be applied to stimuli
 	layers: list of model layers for which features are to be generated
@@ -18,7 +21,7 @@ def generate_features(model, dataset, transform=None, layers=None):
 	# pass a random input to model to retrieve the length of activations list
 	inp_shape = dataset.shape[1:]	# get dimension of 1 datapoint
 	rand_inp = np.random.rand(*inp_shape)
-	rand_activations = model.get_activations(rand_inp)
+	rand_activations = get_activations(model_path,rand_inp)
 	num_activations = len(rand_activations)
 
 	feat_dict = {}
@@ -29,7 +32,7 @@ def generate_features(model, dataset, transform=None, layers=None):
 
 			with torch.no_grad():
 				for iter,x in enumerate(loader):
-					activations = model.get_activations(x)
+					activations = get_activations(model_path,x)
 					for l in layers:
 						feat_dict[l].append(activations[l])
 		
@@ -39,7 +42,7 @@ def generate_features(model, dataset, transform=None, layers=None):
 
 			with torch.no_grad():
 				for iter,x in enumerate(loader):
-					activations = model.get_activations(x)
+					activations = get_activations(model_path,x)
 					for l in range(num_activations):
 						feat_dict[l].append(activations[l])
 
@@ -50,7 +53,7 @@ def generate_features(model, dataset, transform=None, layers=None):
 
 			with torch.no_grad():
 				for iter,x in enumerate(loader):
-					activations = model.get_activations(x)
+					activations = get_activations(model_path,x)
 					for l in layers:
 						assert l in activations.keys(), "Layer "+str(l) + " is not present in model!!"
 						feat_dict[l].append(activations[l])
@@ -61,7 +64,7 @@ def generate_features(model, dataset, transform=None, layers=None):
 
 			with torch.no_grad():
 				for iter,x in enumerate(loader):
-					activations = model.get_activations(x)
+					activations = get_activations(model_path,x)
 					for l in rand_activations.keys():
 						feat_dict[l].append(activations[l])
 

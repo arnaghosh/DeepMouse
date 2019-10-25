@@ -31,30 +31,29 @@ def get_activations(PATH,batch):
 	Output: a dictionary containing layer activations as tensors
     
 	'''
-    
-	model = DPC_RNN(sample_size=48, 
+    model = DPC_RNN(sample_size=48, 
                         num_seq=8, 
                         seq_len=5, 
                         network='resnet18', 
                         pred_step=3)
 
-	checkpoint = torch.load(PATH)
-	model = neq_load_customized(model, checkpoint['state_dict'])
+    checkpoint = torch.load(PATH)
+    model = neq_load_customized(model, checkpoint['state_dict'])
 
-	activations = collections.defaultdict(list)
+    activations = collections.defaultdict(list)
 	
-	for name, m in model.named_modules():
+    for name, m in model.named_modules():
     		if type(m)==nn.Conv3d:
         		print(name)
         		# partial to assign the layer name to each hook
         		m.register_forward_hook(partial(save_activation, name))
 
-	for batch in dataset:
-	out = model(batch)
+    for batch in dataset:
+        out = model(batch)
 
-	activations = {name: torch.cat(outputs, 0) for name, outputs in activations.items()}
+    activations = {name: torch.cat(outputs, 0) for name, outputs in activations.items()}
 
-	return activations
+    return activations
 
 
 def save_activation(name, mod, inp, out):
@@ -69,7 +68,7 @@ if __name__=="__main__":
 	# dummy dataset: 10 batches of size 5
 	batch = [torch.rand(5,8,3,5,56,56) for _ in range(10)] # B x N x C x T x W x H
 	
-	activations = get_activations(PATH,batch):
+	activations = get_activations(PATH,batch)
 
 
 
