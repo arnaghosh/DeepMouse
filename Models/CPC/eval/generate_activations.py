@@ -35,13 +35,13 @@ def get_activations(PATH,dataset):
 	Output: a dictionary containing layer activations as tensors
     
 	'''
-    model = DPC_RNN(sample_size=48, 
-                        num_seq=8, 
+    model = DPC_RNN(sample_size=184,#48, 
+                        num_seq=118,#8 
                         seq_len=5, 
                         network='resnet18', 
                         pred_step=3)
 
-    checkpoint = torch.load(PATH)
+    checkpoint = torch.load(PATH,map_location=torch.device('cpu'))
     model = neq_load_customized(model, checkpoint['state_dict'])
 
     activations = collections.defaultdict(list)

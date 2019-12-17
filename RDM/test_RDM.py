@@ -2,6 +2,8 @@ import os, sys
 from generate_SSM import *
 curr_wd = os.getcwd()
 sys.path.append(os.path.join(os.getcwd(),'../'))
+
+
 from Models.CPC.eval.generate_activations import *
 
 PATH = os.path.join(os.getcwd(),"../Models/CPC/pretrained/testmodel.pth.tar")
